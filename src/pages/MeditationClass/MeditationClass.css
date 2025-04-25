@@ -1,0 +1,164 @@
+.meditation-class-page {
+    padding: 16px;
+    margin-left: 70px;
+  }
+  
+  @media (max-width: 1024px) {
+    .meditation-class-page {
+      margin-left: 0;
+    }
+  }
+  
+  .meditation-header {
+    background-color: #232342;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .meditation-header h1 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+  
+  .meditation-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  
+  .meditation-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .meditation-info h2 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: #ffffff;
+  }
+  
+  .meditation-info p {
+    font-size: 18px;
+    color: #8a8aaa;
+  }
+  
+  .meditation-video-container {
+    width: 100%;
+  }
+  
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #232342;
+  }
+  
+  .video-preview {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(4px);
+  }
+  
+  .play-icon {
+    font-size: 24px;
+  }
+  
+  .play-text {
+    font-size: 16px;
+  }
+  
+  .fullscreen-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  
+  .meditation-techniques {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .technique-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .technique-button {
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    color: #232342;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .technique-button:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 1024px) {
+    .meditation-content {
+      grid-template-columns: 1fr;
+    }
+  
+    .meditation-info h2 {
+      font-size: 32px;
+    }
+  
+    .technique-row {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .meditation-info h2 {
+      font-size: 28px;
+    }
+  
+    .technique-button {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }
+  
+  

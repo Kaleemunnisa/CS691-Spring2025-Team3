@@ -1,0 +1,157 @@
+.profile-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  .profile-content {
+    flex: 1;
+    padding: 0;
+    margin-left: 70px; 
+  }
+  
+  .profile-header {
+    background-color: #1e1e38;
+    color: white;
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    padding: 0 20px;
+  }
+  
+  .profile-section {
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .personal-info {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  
+  .body-measurements {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  
+  .contact-info {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  
+  .profile-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #333;
+  }
+  
+  .profile-section h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .age-input {
+    width: 50%;
+  }
+  
+  .gender-section {
+    margin-top: 15px;
+  }
+  
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .radio-option {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-option input[type="radio"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .save-button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+  
+  .save-button {
+    background-color: #1e1e38;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .save-button:hover {
+    background-color: #2a2a4a;
+  }
+
+  @media (max-width: 768px) {
+    .profile-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .personal-info,
+    .body-measurements,
+    .contact-info {
+      grid-column: 1;
+    }
+  
+    .personal-info {
+      grid-row: 1;
+    }
+  
+    .body-measurements {
+      grid-row: 2;
+    }
+  
+    .contact-info {
+      grid-row: 3;
+    }
+  
+    .profile-content {
+      margin-left: 0;
+      padding-top: 60px; 
+    }
+  }
+  

@@ -1,0 +1,103 @@
+.exercises-page {
+  padding: 16px;
+  margin-left: 80px;
+  height: 100vh;
+  width: calc(100vw - 100px);
+  overflow-y: scroll;
+}
+
+@media (max-width: 1024px) {
+  .exercises-page {
+    margin-left: 0;
+  }
+}
+
+.anatomy-diagram {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #232342;
+  border-radius: 8px;
+}
+
+.body-views {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  position: relative;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.body-view {
+  position: relative;
+  width: 900px;
+  height: 800px;
+}
+
+.body-image {
+  width: 1200px;
+  height: 750px;
+  object-fit: contain;
+  margin-top: 20px;
+  margin-left: -120px;
+}
+
+.muscle-label {
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.label-box {
+  background-color: #ffc107;
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #232342;
+  white-space: nowrap;
+  transition: transform 0.2s ease;
+}
+
+.muscle-label:hover .label-box,
+.muscle-label.active .label-box {
+  transform: scale(1.1);
+  background-color: #ffdb4d;
+}
+
+.label-line {
+  position: absolute;
+  width: 30px;
+  height: 2px;
+  background-color: #ffc107;
+}
+
+.muscle-label[style*="left"] .label-line {
+  right: -30px;
+}
+
+.muscle-label[style*="right"] .label-line {
+  left: -30px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .body-views {
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+
+  .body-view {
+    width: 150px;
+    height: 375px;
+  }
+
+  .label-box {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+

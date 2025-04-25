@@ -1,0 +1,50 @@
+.classes-page {
+    padding: 16px;
+    margin-left:70px;
+    overflow-y: scroll;
+  }
+  
+  @media (max-width: 1024px) {
+    .classes-page {
+      margin-left: 0;
+    }
+  }
+  
+  .classes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .instructors-section {
+    margin-top: 32px;
+  }
+  
+  .instructors-section h2 {
+    background-color: #232342;
+    color: #ffffff;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .instructors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+  
+  @media (max-width: 768px) {
+    .classes-grid,
+    .instructors-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .classes-page::-webkit-scrollbar{
+    display:none;
+  }

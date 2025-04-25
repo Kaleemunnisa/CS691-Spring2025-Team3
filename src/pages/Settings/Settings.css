@@ -1,0 +1,349 @@
+.settings-page {
+    display: flex;
+    min-height: 100vh;
+    height: 100%;
+    background-color: #f5f5f5;
+    overflow: hidden;
+  }
+  
+  .settings-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 70px;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .settings-header {
+    background-color: #1e1e38;
+    color: white;
+    padding: 20px;
+    border-radius: 0 0 0 0;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  
+  .settings-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  .settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 20px;
+    padding: 20px;
+    flex: 1;
+    height: calc(100vh - 80px); 
+  }
+  
+  .settings-section {
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+  }
+  
+  .security-section {
+    grid-column: 1;
+    grid-row: 1 / span 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .preferences-section {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .connected-accounts-section {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .settings-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    color: #333;
+  }
+  
+  .settings-section h3 {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .section-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  
+  .settings-tab {
+    margin-bottom: 20px;
+  }
+  
+  .tab-button {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+  
+  .tab-button.active {
+    background-color: #fff;
+    font-weight: 500;
+  }
+  
+  .password-icon,
+  .preferences-icon,
+  .accounts-icon,
+  .dark-mode-icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .confirm-password {
+    margin-bottom: 20px;
+  }
+  
+  .update-button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .update-button {
+    background-color: #1e1e38;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .update-button:hover {
+    background-color: #2a2a4a;
+  }
+  
+  /* App Preferences Styles */
+  .app-preferences {
+    padding: 10px 0;
+    height: 100%;
+  }
+  
+  .preference-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+  }
+  
+  /* Toggle Switch */
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+  }
+  
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .toggle-slider {
+    background-color: #1e1e38;
+  }
+  
+  input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+  }
+  
+  /* Connected Accounts Styles */
+  .account-list {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .account-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+  }
+  
+  .account-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .account-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+  }
+  
+  .account-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .account-name {
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+  
+  .account-email,
+  .account-status {
+    font-size: 0.85rem;
+    color: #666;
+  }
+  
+  .account-status {
+    font-style: italic;
+  }
+  
+  .account-action-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .account-action-button.connect {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .account-action-button.disconnect {
+    background-color: #f0f0f0;
+    color: #666;
+  }
+  
+  .account-action-button.primary {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .account-action-button.primary.active {
+    background-color: #1e1e38;
+    color: white;
+  }
+  
+  .account-action-button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Ensure the page fills the viewport */
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .settings-content {
+        margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+    }
+
+    .security-section,
+    .preferences-section,
+    .connected-accounts-section {
+        grid-column: 1;
+        height: auto;
+    }
+
+    .security-section {
+        grid-row: 1;
+    }
+
+    .preferences-section {
+        grid-row: 2;
+    }
+
+    .connected-accounts-section {
+        grid-row: 3;
+    }
+
+    .settings-content {
+        margin-left: 0;
+        padding-top: 60px; /* Space for mobile sidebar toggle */
+        height: auto;
+        overflow-y: auto;
+    }
+  }
+  

@@ -13,7 +13,7 @@ body {
     background-image: url('./components/assets/main.jpg'); 
     background-size: cover;
     background-position: center;
-    height: 96vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,6 +21,7 @@ body {
     text-align: center;
     padding: 20px;
     flex-direction: column;
+    background-repeat: no-repeat;
 }
 
 .content {

@@ -9,6 +9,7 @@ const Home = () => {
         satisfactionRate: 95
     };
 
+
     return (
         <div className="hero">
             <div className="content">
@@ -19,7 +20,7 @@ const Home = () => {
                     </p>
                 </div>
             </div>
-            <button className="try-free">Try it for free</button>
+            <a className="try-free" href="#login">Try it for free</a>
             {stats ? (
                 <div className="stats">
                     <div><span>{stats.happyStudents}<span className='plus'>+</span></span><br />Happy Students</div>

@@ -39,15 +39,15 @@ const Nav = () => {
     return (
         <nav className={navClass}>
             <div className="nav-links">
-                    <a href='/class' 
-                    onClick={() => setActiveNav('/class')} 
-                    className={activeNav === '/class' ? 'active' : ''}>Classes</a>
-                    <a href="/exercise" 
-                    onClick={() => setActiveNav('/exercise')} 
-                    className={activeNav === '/exercise' ? 'active' : ''}>Exercise</a>
-                    <a href="/mealmastery" 
-                    onClick={() => setActiveNav('/mealmastery')} 
-                    className={activeNav === '/mealmastery' ? 'active' : ''}>Meal-plan</a>
+                    <a href='#class' 
+                    onClick={() => setActiveNav('#class')} 
+                    className={activeNav === '#class' ? 'active' : ''}>Classes</a>
+                    <a href="#exercise" 
+                    onClick={() => setActiveNav('#exercise')} 
+                    className={activeNav === '#exercise' ? 'active' : ''}>Exercise</a>
+                    <a href="#mealmastery" 
+                    onClick={() => setActiveNav('#mealmastery')} 
+                    className={activeNav === '#mealmastery' ? 'active' : ''}>Meal-plan</a>
             </div>
             <div className="nav-title">Eat & Fit</div>
             <div className="nav-signup">

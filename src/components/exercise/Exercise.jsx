@@ -4,7 +4,7 @@ import heroImage from '../assets/exercise-bg.jpg';
 
 const Exercise = () => {
   return (
-    <div className="exercise-page">
+    <div id="exercise" className="exercise-page">
       <div className="hero-section" style={{ backgroundImage: `url(${heroImage})` }}>
         <div className="hero-content-wrapper">
           <div className="hero-text">

@@ -1,0 +1,31 @@
+.instructor-card {
+    background-color: #c19a6b;
+    padding: 40px 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .instructor-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .instructor-card h3 {
+    color: #232342;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+  @media (max-width: 768px) {
+    .instructor-card {
+      padding: 30px 15px;
+    }
+  
+    .instructor-card h3 {
+      font-size: 14px;
+    }
+  }
+  
+  

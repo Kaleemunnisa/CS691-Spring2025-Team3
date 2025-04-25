@@ -1,0 +1,50 @@
+.heart-rate-section {
+  background-color: #232342;
+  border-radius: 8px;
+  padding: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.heart-rate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.heart-rate-header h3 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.time-range {
+  display: flex;
+  gap: 8px;
+}
+
+.time-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.time-btn.active {
+  background-color: #2a2a4a;
+}
+
+.heart-rate-value {
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.heart-rate-value h2 {
+  font-size: 20px;
+  font-weight: 500;
+}
+

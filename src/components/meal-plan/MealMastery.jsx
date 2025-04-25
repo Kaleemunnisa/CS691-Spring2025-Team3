@@ -25,7 +25,7 @@ const MealMastery = () => {
   );
 
   return (
-    <div className="container">
+    <div id="mealmastery" className="container">
       {isLoading ? (
         <div className="skeleton-title"></div>
       ) : (

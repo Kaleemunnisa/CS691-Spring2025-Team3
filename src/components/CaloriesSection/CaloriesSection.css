@@ -1,0 +1,110 @@
+.calories-section {
+  background-color: #232342;
+  border-radius: 8px;
+  padding: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.calories-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.calories-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calories-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calories-title h3 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.calories-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.calories-stats {
+  font-size: 14px;
+  color: #8a8aaa;
+}
+
+.time-range {
+  display: flex;
+  gap: 8px;
+}
+
+.time-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.time-btn.active {
+  background-color: #2a2a4a;
+}
+
+.nutrition-chart {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.nutrition-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nutrition-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nutrition-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nutrition-icon img {
+  width: 12px;
+  height: 12px;
+}
+
+.protein {
+  background-color: #f44336;
+}
+
+.carbs {
+  background-color: #ffc107;
+}
+
+.fiber {
+  background-color: #4caf50;
+}
+
+.nutrition-item span {
+  font-size: 14px;
+}
+

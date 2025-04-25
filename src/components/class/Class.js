@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './classes.css';
+import './Class.css';
 import img1 from '../assets/pose1.jpg';
 import img2 from '../assets/pose2.jpg';
 import img3 from '../assets/pose3.jpg';
@@ -38,16 +38,18 @@ const Class = () => {
     const navigate = useNavigate();
 
     return (
-        <div className={`classes-container ${animate ? 'fade-in' : ''}`}>
+        <div id="class" className={ `classes-container ${animate ? 'fade-in' : ''}`}>
             <h1>Your Healthy Partner</h1>
             <p>Our online yoga, meditation, pilates and guided wellness programs are designed to support you at every stage of your Fitness journey</p>
-            <button onClick={() => navigate('/yoga')}>Browse Classes</button>
+            <button href="#yoga" onClick={() => navigate('#yoga')}>Browse Classes</button>
             <div className="classes-grid">
                 {classesData.map((classItem, index) => (
                     <div className="class-card" key={index}>
                         <img src={classItem.image} alt={classItem.title} />
-                        <h2>{classItem.title}</h2>
-                        <p>{classItem.description}</p>
+                        <div className="overlay">
+                            <h2>{classItem.title}</h2>
+                            <p>{classItem.description}</p>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -1,0 +1,57 @@
+/* Animation styles for the ScrollAnimation component */
+.scroll-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .scroll-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .scroll-slide-in-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .scroll-slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .scroll-slide-in-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .scroll-slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .scroll-zoom-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .scroll-zoom-in.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .scroll-slide-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .scroll-slide-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  

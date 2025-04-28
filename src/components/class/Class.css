@@ -71,18 +71,18 @@ button {
     cursor: pointer;
 }
 
-.fade-in {
+/* .fade-in {
     animation: fadeIn 1s ease-in;
-}
+} */
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
     from {
         opacity: 0;
     }
     to {
         opacity: 1;
     }
-}
+} */
 
 @media (max-width: 768px) {
     .classes-grid {
@@ -116,7 +116,6 @@ button {
     justify-content: center;
     align-items: center;
     color: var(--main-color);
-    opacity: 0;
     transition: opacity 0.3s;
 }
 

@@ -1,3 +1,110 @@
+// Spoonacular API utility functions
+
+/**
+ * Search recipes using the complex search endpoint
+ * @param {Object} params - Search parameters
+ * @returns {Promise<Object>} - Search results
+ */
+export const searchRecipesComplex = async (params) => {
+  try {
+    // API key should be stored in environment variables
+    const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY
+
+    // Build the query string
+    const queryParams = new URLSearchParams()
+
+    // Add all non-empty parameters to the query
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) queryParams.append(key, value)
+    })
+
+    // Add API key
+    queryParams.append("apiKey", apiKey)
+
+    const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?${queryParams.toString()}`)
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`)
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error("Error searching recipes:", error)
+    throw error
+  }
+}
+
+/**
+ * Get detailed recipe information by ID
+ * @param {number} id - Recipe ID
+ * @returns {Promise<Object>} - Recipe details
+ */
+export const getRecipeInformation = async (id) => {
+  try {
+    const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY
+    const response = await fetch(
+      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}&includeNutrition=true`,
+    )
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`)
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error("Error getting recipe information:", error)
+    throw error
+  }
+}
+
+/**
+ * Search recipes by ingredients
+ * @param {string[]} ingredients - List of ingredients
+ * @param {number} number - Number of results to return
+ * @returns {Promise<Object[]>} - Search results
+ */
+export const searchRecipesByIngredients = async (ingredients, number = 10) => {
+  try {
+    const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY
+    const ingredientsParam = ingredients.join(",")
+
+    const response = await fetch(
+      `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsParam}&number=${number}&apiKey=${apiKey}`,
+    )
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`)
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error("Error searching recipes by ingredients:", error)
+    throw error
+  }
+}
+
+/**
+ * Get nutrition information for a recipe
+ * @param {number} id - Recipe ID
+ * @returns {Promise<Object>} - Nutrition information
+ */
+export const getRecipeNutrition = async (id) => {
+  try {
+    const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY
+    const response = await fetch(`https://api.spoonacular.com/recipes/${id}/nutritionWidget.json?apiKey=${apiKey}`)
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`)
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error("Error getting recipe nutrition:", error)
+    throw error
+  }
+}
+
+// API key should be stored in environment variables in a production app
 const API_KEY = "08f6d92d470e4da0a6651aa95f197f60"
 const BASE_URL = "https://api.spoonacular.com"
 
@@ -25,50 +132,6 @@ export const guessNutritionByTitle = async (title) => {
     }
   } catch (error) {
     console.error("Error fetching nutrition data:", error)
-    throw error
-  }
-}
-
-/**
- * Search for recipes by ingredients
- * @param {string[]} ingredients - Array of ingredients
- * @param {number} number - Number of results to return
- * @returns {Promise<Object[]>} - Array of recipe objects
- */
-export const searchRecipesByIngredients = async (ingredients, number = 5) => {
-  try {
-    const ingredientsParam = ingredients.map(encodeURIComponent).join(",")
-    const response = await fetch(
-      `${BASE_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${ingredientsParam}&number=${number}`,
-    )
-
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`)
-    }
-
-    return await response.json()
-  } catch (error) {
-    console.error("Error searching recipes by ingredients:", error)
-    throw error
-  }
-}
-
-/**
- * Get detailed recipe information
- * @param {number} id - Recipe ID
- * @returns {Promise<Object>} - Detailed recipe information
- */
-export const getRecipeInformation = async (id) => {
-  try {
-    const response = await fetch(`${BASE_URL}/recipes/${id}/information?apiKey=${API_KEY}&includeNutrition=true`)
-
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`)
-    }
-
-    return await response.json()
-  } catch (error) {
-    console.error("Error fetching recipe information:", error)
     throw error
   }
 }

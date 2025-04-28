@@ -38,7 +38,7 @@ const Class = () => {
     const navigate = useNavigate();
 
     return (
-        <div id="class" className={ `classes-container ${animate ? 'fade-in' : ''}`}>
+        <div id="class" className={`classes-container`} >
             <h1>Your Healthy Partner</h1>
             <p>Our online yoga, meditation, pilates and guided wellness programs are designed to support you at every stage of your Fitness journey</p>
             <button href="#yoga" onClick={() => navigate('#yoga')}>Browse Classes</button>

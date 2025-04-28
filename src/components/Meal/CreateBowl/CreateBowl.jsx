@@ -32,7 +32,6 @@ function CreateBowl() {
       setLoading(true)
       setSearched(true)
 
-      // Format ingredients for API call (comma-separated)
       const ingredientsParam = validIngredients.join(",")
 
       // Make API call to Spoonacular

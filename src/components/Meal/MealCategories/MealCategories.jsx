@@ -54,6 +54,13 @@ function MealCategories() {
         DE1,
       path: "/meal-plan/desserts",
     },
+    {
+      _id: "7",
+      name: "Recipe Search",
+      description: "Search for recipes",
+      image: "/cookbook-ingredients.png",
+      path: "/recipe-search",
+    },
   ]
 
   const handleSearchChange = (e) => {

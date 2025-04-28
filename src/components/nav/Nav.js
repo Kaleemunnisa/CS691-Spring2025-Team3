@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Nav.css';
 import LoginModal from '../login/login';
-import axios from 'axios';
 
 const Nav = () => {
     const navClass = 'navbar'; 

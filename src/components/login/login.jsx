@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './login.css';
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -15,8 +15,9 @@ const LoginModal = ({ isOpen, onClose, onLogin, onRegister, onGoogleLogin, onFac
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [isLogin, setIsLogin] = useState(true);
-    const provider = new GoogleAuthProvider();
-    const appleProvider = new OAuthProvider('apple.com');
+    const [error, setError] = useState('');
+    const provider = useMemo(() => new GoogleAuthProvider(), []);
+    const appleProvider = useMemo(() => new OAuthProvider('apple.com'), []);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -59,7 +60,7 @@ const LoginModal = ({ isOpen, onClose, onLogin, onRegister, onGoogleLogin, onFac
         };
 
         loadGoogleAPI();
-    }, [provider]);
+    }, [provider, appleProvider]);
 
     const handleGoogleLogin = async () => {
         const auth = getAuth();
@@ -73,10 +74,9 @@ const LoginModal = ({ isOpen, onClose, onLogin, onRegister, onGoogleLogin, onFac
             localStorage.setItem("userData", JSON.stringify(user));
             navigate("/");
         }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = GoogleAuthProvider.credentialFromError(error);
+            setError(error.message);
+            // Optionally log for debugging:
+            // console.error(error);
         });
     };
 
@@ -89,10 +89,9 @@ const LoginModal = ({ isOpen, onClose, onLogin, onRegister, onGoogleLogin, onFac
             const accessToken = credential.accessToken;
             const idToken = credential.idToken;
         }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = OAuthProvider.credentialFromError(error);
+            setError(error.message);
+            // Optionally log for debugging:
+            // console.error(error);
         });
     };
 

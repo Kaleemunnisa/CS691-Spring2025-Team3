@@ -17,8 +17,8 @@ import ChestWorkout from "./pages/ChestWorkout/ChestWorkout"
 import LegsWorkout from "./pages/LegsWorkout/LegsWorkout"
 import ForearmWorkout from "./pages/ForearmWorkout/ForearmWorkout"
 import MealPlan from "./pages/MealPlan/MealPlan"
-import {Login} from './components/login';
-import {AuthLoading} from './components/AuthLoading';
+import { Login } from './components/login.jsx';
+import { AuthLoading } from './components/AuthLoading.jsx';
 import MealCategories from './components/Meal/MealCategories/MealCategories'
 import BreakfastPage from "./pages/MealPlan/BreakfastPage"
 import LunchPage from "./pages/MealPlan/LunchPage"
@@ -26,6 +26,7 @@ import DinnerPage from "./pages/MealPlan/DinnerPage"
 import ProteinShakesPage from "./pages/MealPlan/ProteinShakesPage"
 import SnacksPage from "./pages/MealPlan/SnacksPage"
 import DessertsPage from "./pages/MealPlan/DessertsPage"
+import RecipeSearchPage from "./pages/MealPlan/RecipeSearchPage"
 import Settings from "./pages/Settings/Settings"
 import "./App.css"
 
@@ -72,6 +73,7 @@ function App() {
           <Route path="/meal-plan/snacks" element={<SnacksPage />} />
           <Route path="/meal-plan/protein-shakes" element={<ProteinShakesPage />} />
           <Route path="/meal-plan/desserts" element={<DessertsPage />} />
+          <Route path="/meal-plan/recipe-search" element={<RecipeSearchPage />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>

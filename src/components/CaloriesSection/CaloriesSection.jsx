@@ -1,68 +1,78 @@
 import "./CaloriesSection.css"
-import BarChart from "../BarChart/BarChart"
-import caloriesIcon from "../assets/calories-icon.png"
-import proteinIcon from "../assets/protein-icon.png"
-import carbsIcon from "../assets/carbs-icon.png"
-import fiberIcon from "../assets/fiber-icon.png"
+import { useCalories } from "../../context/CalorieContext"
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 function CaloriesSection() {
-  const caloriesData = [
-    { value: 70, day: "M" },
-    { value: 85, day: "T" },
-    { value: 75, day: "W" },
-    { value: 90, day: "R" },
-    { value: 95, day: "F" },
-    { value: 80, day: "S" },
-    { value: 85, day: "S" },
-  ]
+  const { getTodaysMeals, getTotalCaloriesToday } = useCalories()
+  const [todaysMeals, setTodaysMeals] = useState([])
+  const [caloriesConsumed, setCaloriesConsumed] = useState(0)
+
+  useEffect(() => {
+    setTodaysMeals(getTodaysMeals())
+    setCaloriesConsumed(getTotalCaloriesToday())
+
+    const intervalId = setInterval(() => {
+      setTodaysMeals(getTodaysMeals())
+      setCaloriesConsumed(getTotalCaloriesToday())
+    }, 2000)
+
+    return () => clearInterval(intervalId)
+  }, [getTodaysMeals, getTotalCaloriesToday])
+
+  const caloriesGoal = 2000 
+  const caloriesRemaining = Math.max(0, caloriesGoal - caloriesConsumed)
 
   return (
     <div className="calories-section">
       <div className="calories-header">
-        <div className="calories-info">
-          <div className="calories-title">
-            <h3>Count Your Daily Calories</h3>
-            <img src={caloriesIcon || "/placeholder.svg"} alt="Calories" className="calories-icon" />
-          </div>
-          <div className="calories-stats">
-            <div>Eaten 1400 Cal</div>
-            <div>500 Kcal Left</div>
-          </div>
-        </div>
-        <div className="time-range">
-          <button className="time-btn active">W</button>
-          <button className="time-btn">M</button>
-          <button className="time-btn">Y</button>
-        </div>
+        <h2>Calories & Nutrition</h2>
       </div>
 
-      <div className="nutrition-chart">
-        <div className="nutrition-list">
-          <div className="nutrition-item">
-            <div className="nutrition-icon protein">
-              <img src={proteinIcon || "/placeholder.svg"} alt="Protein" />
-            </div>
-            <span>Protein</span>
+      <div className="calories-content">
+        <div className="calories-info">
+          <div className="calories-eaten">
+            <span className="calories-label">Eaten - </span>
+            <span className="calories-value">{caloriesConsumed} Cal</span>
           </div>
-          <div className="nutrition-item">
-            <div className="nutrition-icon carbs">
-              <img src={carbsIcon || "/placeholder.svg"} alt="Carbs" />
-            </div>
-            <span>Carbs</span>
-          </div>
-          <div className="nutrition-item">
-            <div className="nutrition-icon fiber">
-              <img src={fiberIcon || "/placeholder.svg"} alt="Fiber" />
-            </div>
-            <span>Fiber</span>
+          <div className="calories-left">
+            <span className="calories-label">Left - </span>
+            <span className="calories-value">{caloriesRemaining} Kcal</span>
           </div>
         </div>
 
-        <BarChart data={caloriesData} color="#ff9800" showDays={true} />
+        <div className="calories-progress">
+          <div
+            className="calories-progress-bar"
+            style={{ width: `${Math.min(100, (caloriesConsumed / caloriesGoal) * 100)}%` }}
+          ></div>
+        </div>
+
+        <div className="today-meals-section">
+          <span> </span>
+          <h3>Today's Meals</h3>
+
+          {todaysMeals.length > 0 ? (
+            <ul className="meal-list">
+              {todaysMeals.map((meal) => (
+                <li key={meal.id} className="meal-item">
+                  <span className="meal-name">{meal.title || meal.name || "Unnamed Meal"}</span>
+                  <span className="meal-calories">{meal.calories || 0}  Cal</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="no-meals-message">
+              <p>No meals tracked today.</p>
+              <Link to="/meal-plan" className="add-meal-btn">
+                Add Meals
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
 }
 
 export default CaloriesSection
-

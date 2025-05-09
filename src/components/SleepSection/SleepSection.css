@@ -1,64 +1,98 @@
 .sleep-section {
-  background-color: #232342;
-  border-radius: 8px;
-  padding: 16px;
+  background-color: #1e1e2f;
+  border-radius: 12px;
+  padding: 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  color: white;
+  height: 40%;
+}
+
+.sleep-section:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .sleep-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .sleep-header h3 {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
 }
 
 .time-range {
   display: flex;
   gap: 8px;
+  background-color: #252547;
+  border-radius: 6px;
+  padding: 4px;
 }
 
 .time-btn {
   background: none;
   border: none;
-  color: #ffffff;
-  padding: 4px 12px;
+  color: #a0aec0;
+  padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.time-btn:hover {
+  color: white;
 }
 
 .time-btn.active {
-  background-color: #2a2a4a;
+  background-color: #1e1e2f;
+  color: white;
 }
 
 .sleep-subheader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .sleep-subheader span {
   font-size: 14px;
-  color: #8a8aaa;
+  color: #a0aec0;
 }
 
 .clock-icon {
   width: 16px;
   height: 16px;
+  color: #a0aec0;
 }
 
 .sleep-chart-container {
   display: flex;
   align-items: flex-end;
   flex: 1;
+  margin-top: 10px;
+}
+
+.sleep-chart {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 120px;
+}
+
+.sleep-bar {
+  width: 12px;
+  background-color: #4ecdc4;
+  border-radius: 2px 2px 0 0;
 }
 
 .sleep-times {
@@ -66,7 +100,7 @@
   flex-direction: column;
   justify-content: space-between;
   font-size: 12px;
-  color: #8a8aaa;
+  color: #a0aec0;
   margin-right: 12px;
   height: 100px;
 }
@@ -77,3 +111,38 @@
   align-items: center;
 }
 
+.sleep-days {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.sleep-day {
+  font-size: 12px;
+  color: #a0aec0;
+  text-align: center;
+  width: 12px;
+}
+
+.sleep-quality {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #2d2d44;
+}
+
+.quality-item {
+  text-align: center;
+}
+
+.quality-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.quality-label {
+  font-size: 12px;
+  color: #a0aec0;
+}

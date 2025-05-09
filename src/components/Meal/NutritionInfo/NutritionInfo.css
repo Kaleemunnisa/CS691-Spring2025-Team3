@@ -12,17 +12,43 @@
   margin: 0 auto;
 }
 
-.upload-section {
+.analysis-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%;
+  gap: 20px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.analysis-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.analysis-method {
+  background-color: rgba(74, 85, 104, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.method-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .upload-container {
   width: 100%;
-  height: 400px;
+  height: 250px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   display: flex;
@@ -92,7 +118,7 @@
 }
 
 .analyze-btn {
-  margin-top: 20px;
+  margin-top: 15px;
   padding: 12px 24px;
   background-color: #4a5568;
   color: white;
@@ -102,6 +128,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .analyze-btn:hover {
@@ -116,7 +143,7 @@
 .prediction-result {
   margin-top: 20px;
   text-align: center;
-  padding: 15px;
+  padding: 20px;
   background-color: rgba(74, 85, 104, 0.3);
   border-radius: 10px;
   width: 100%;
@@ -133,6 +160,29 @@
   font-weight: 700;
   color: #fff;
   text-transform: capitalize;
+  margin-bottom: 10px;
+}
+
+.analysis-source {
+  font-size: 14px;
+  color: #a0aec0;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.reset-btn {
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .info-section {
@@ -256,6 +306,131 @@
   cursor: pointer;
 }
 
+/* Text Search */
+.text-search-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.search-input-container {
+  display: flex;
+  gap: 10px;
+}
+
+.food-search-input {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+}
+
+.food-search-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.search-btn {
+  padding: 0 20px;
+  background-color: #4a5568;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: #2d3748;
+}
+
+.search-btn:disabled {
+  background-color: #718096;
+  cursor: not-allowed;
+}
+
+.search-tip {
+  font-size: 14px;
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* Recent Searches */
+.recent-searches {
+  margin-top: 10px;
+}
+
+.recent-title {
+  font-size: 14px;
+  color: #e2e8f0;
+  margin-bottom: 10px;
+}
+
+.recent-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.recent-tag {
+  padding: 6px 12px;
+  background-color: rgba(74, 85, 104, 0.4);
+  color: #e2e8f0;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.recent-tag:hover {
+  background-color: rgba(74, 85, 104, 0.6);
+}
+
+/* Back Button */
+.back-button {
+  padding: 8px 16px;
+  background-color: rgba(74, 85, 104, 0.3);
+  color: #e2e8f0;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+}
+
+.back-button:hover {
+  background-color: rgba(74, 85, 104, 0.5);
+}
+
+/* Error Message */
+.error-message {
+  background-color: rgba(229, 62, 62, 0.2);
+  border-left: 4px solid #e53e3e;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.error-message p {
+  color: #fff;
+  margin: 0;
+}
+
+.error-note {
+  font-size: 14px;
+  color: #e2e8f0;
+  margin-top: 5px !important;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -273,7 +448,7 @@
   }
 
   .upload-container {
-    height: 300px;
+    height: 200px;
   }
 
   .serving-info {
@@ -283,5 +458,14 @@
 
   .allergies-grid {
     grid-template-columns: 1fr;
+  }
+
+  .search-input-container {
+    flex-direction: column;
+  }
+
+  .search-btn {
+    width: 100%;
+    padding: 10px;
   }
 }

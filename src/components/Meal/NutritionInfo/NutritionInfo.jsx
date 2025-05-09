@@ -1,60 +1,23 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import "./NutritionInfo.css"
 import ScrollAnimation from "../../ScrollAnimation/ScrollAnimation"
-import * as tf from "@tensorflow/tfjs"
 import { Spinner } from "react-bootstrap"
 
-const FOOD_CLASSES = [
-  "apple",
-  "banana",
-  "bread",
-  "broccoli",
-  "burger",
-  "chicken",
-  "eggs",
-  "oatmeal",
-  "pasta",
-  "pizza",
-  "rice",
-  "salad",
-  "salmon",
-  "steak",
-  "yogurt",
-]
-
-const NUTRITION_DATA = {
-  apple: { calories: 52, protein: 0.3, carbs: 14, fats: 0.2, fiber: 2.4 },
-  banana: { calories: 89, protein: 1.1, carbs: 22.8, fats: 0.3, fiber: 2.6 },
-  bread: { calories: 265, protein: 9.4, carbs: 49, fats: 3.2, fiber: 2.7 },
-  broccoli: { calories: 34, protein: 2.8, carbs: 6.6, fats: 0.4, fiber: 2.6 },
-  burger: { calories: 295, protein: 17, carbs: 24, fats: 14, fiber: 1.0 },
-  chicken: { calories: 165, protein: 31, carbs: 0, fats: 3.6, fiber: 0 },
-  eggs: { calories: 155, protein: 12.6, carbs: 1.1, fats: 10.6, fiber: 0 },
-  oatmeal: { calories: 68, protein: 2.4, carbs: 12, fats: 1.4, fiber: 1.7 },
-  pasta: { calories: 158, protein: 5.8, carbs: 31, fats: 0.9, fiber: 1.8 },
-  pizza: { calories: 266, protein: 11, carbs: 33, fats: 10, fiber: 2.5 },
-  rice: { calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4 },
-  salad: { calories: 20, protein: 1.2, carbs: 3.3, fats: 0.2, fiber: 1.6 },
-  salmon: { calories: 208, protein: 20, carbs: 0, fats: 13, fiber: 0 },
-  steak: { calories: 271, protein: 26, carbs: 0, fats: 19, fiber: 0 },
-  yogurt: { calories: 59, protein: 3.5, carbs: 5, fats: 3.3, fiber: 0 },
-  // Add nutrition data for all your food classes
-}
+const SPOONACULAR_API_KEY = "08f6d92d470e4da0a6651aa95f197f60"
 
 function NutritionInfo() {
   const [image, setImage] = useState(null)
   const [preview, setPreview] = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [models, setModels] = useState({
-    vgg19: null,
-    resnet50: null,
-    mobilenetv2: null,
-  })
-  const [modelsLoaded, setModelsLoaded] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
+  const [foodTitle, setFoodTitle] = useState("")
   const [prediction, setPrediction] = useState(null)
   const [servings, setServings] = useState(1)
   const [servingSize, setServingSize] = useState("100g")
   const [nutritionValues, setNutritionValues] = useState(null)
+  const [error, setError] = useState(null)
+  const [recentSearches, setRecentSearches] = useState([])
+  const [analysisSource, setAnalysisSource] = useState(null) 
   const [allergens, setAllergens] = useState({
     Dairy: false,
     Eggs: false,
@@ -69,34 +32,18 @@ function NutritionInfo() {
   })
   const fileInputRef = useRef(null)
 
+  // Load recent searches from localStorage on component mount
   useEffect(() => {
-    async function loadModels() {
-      try {
-        const mobilenet = await tf.loadLayersModel(
-          "https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json",
-        )
-
-        setModels({
-          vgg19: mobilenet,
-          resnet50: mobilenet, 
-          mobilenetv2: mobilenet,
-        })
-
-        setModelsLoaded(true)
-        console.log("Models loaded successfully")
-      } catch (error) {
-        console.error("Error loading models:", error)
-      }
+    const savedSearches = localStorage.getItem("recentFoodSearches")
+    if (savedSearches) {
+      setRecentSearches(JSON.parse(savedSearches))
     }
+  }, [])
 
-    loadModels()
-
-    return () => {
-      if (models.vgg19) models.vgg19.dispose()
-      if (models.resnet50) models.resnet50.dispose()
-      if (models.mobilenetv2) models.mobilenetv2.dispose()
-    }
-  }, [models.vgg19, models.resnet50, models.mobilenetv2])
+  // Save recent searches to localStorage when they change
+  useEffect(() => {
+    localStorage.setItem("recentFoodSearches", JSON.stringify(recentSearches))
+  }, [recentSearches])
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -110,58 +57,123 @@ function NutritionInfo() {
     }
   }
 
-  const preprocessImage = async (img) => {
-    return new Promise((resolve) => {
-      const image = new Image()
-      image.src = img
-      image.onload = () => {
-        const canvas = document.createElement("canvas")
-        canvas.width = 224
-        canvas.height = 224
-        const ctx = canvas.getContext("2d")
-
-        ctx.drawImage(image, 0, 0, 224, 224)
-
-        const imageData = ctx.getImageData(0, 0, 224, 224)
-
-        const tensor = tf.browser.fromPixels(imageData).toFloat().div(tf.scalar(255)).expandDims()
-
-        resolve(tensor)
-      }
-    })
-  }
-
   const analyzeImage = async () => {
-    if (!image || !modelsLoaded) return
+    if (!image) return
 
     setIsAnalyzing(true)
+    setError(null)
+    setPrediction(null)
+    setNutritionValues(null)
 
     try {
-      const tensor = await preprocessImage(preview)
+      // Use Spoonacular API to analyze the image
+      const formData = new FormData()
+      formData.append("file", image)
 
-      const preds_vgg19 = await models.vgg19.predict(tensor).data()
-      const preds_resnet50 = await models.resnet50.predict(tensor).data()
-      const preds_mobilenetv2 = await models.mobilenetv2.predict(tensor).data()
+      console.log("Analyzing image with Spoonacular API...")
+      const response = await fetch(`https://api.spoonacular.com/food/images/analyze?apiKey=${SPOONACULAR_API_KEY}`, {
+        method: "POST",
+        body: formData,
+      })
 
-      const vgg19Array = Array.from(preds_vgg19)
-      const resnet50Array = Array.from(preds_resnet50)
-      const mobilenetv2Array = Array.from(preds_mobilenetv2)
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(`API request failed with status ${response.status}: ${errorData.message || "Unknown error"}`)
+      }
 
-      const ensemblePreds = vgg19Array.map((val, i) => (val + resnet50Array[i] + mobilenetv2Array[i]) / 3)
+      const data = await response.json()
+      console.log("Image analysis response:", data)
 
-      const maxIndex = ensemblePreds.indexOf(Math.max(...ensemblePreds))
-      const predictedClass = FOOD_CLASSES[maxIndex]
+      // Format the nutrition data
+      const nutrition = {
+        calories: data.nutrition?.calories || 0,
+        protein: data.nutrition?.protein || 0,
+        carbs: data.nutrition?.carbs || 0,
+        fats: data.nutrition?.fat || 0,
+        fiber: data.nutrition?.fiber || 0,
+      }
 
-      const nutrition = NUTRITION_DATA[predictedClass]
-
-      setPrediction(predictedClass)
+      setPrediction(data.category?.name || "Food")
       setNutritionValues(nutrition)
-
-      tensor.dispose()
+      setAnalysisSource("image")
     } catch (error) {
       console.error("Error analyzing image:", error)
+      setError(`Failed to analyze image: ${error.message}`)
+
+      // Fallback to a mock response for demonstration
+      const mockNutrition = {
+        calories: 250,
+        protein: 10,
+        carbs: 30,
+        fats: 12,
+        fiber: 3,
+      }
+      setPrediction("Food Item (Estimated)")
+      setNutritionValues(mockNutrition)
+      setAnalysisSource("image")
     } finally {
       setIsAnalyzing(false)
+    }
+  }
+
+  const searchFoodNutrition = async () => {
+    if (!foodTitle.trim()) return
+
+    setIsSearching(true)
+    setError(null)
+    setPrediction(null)
+    setNutritionValues(null)
+
+    try {
+      const encodedTitle = encodeURIComponent(foodTitle)
+      console.log(`Searching for nutrition info for: ${foodTitle}`)
+
+      const response = await fetch(
+        `https://api.spoonacular.com/recipes/guessNutrition?apiKey=${SPOONACULAR_API_KEY}&title=${encodedTitle}`,
+      )
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(`API request failed with status ${response.status}: ${errorData.message || "Unknown error"}`)
+      }
+
+      const data = await response.json()
+      console.log("Nutrition data response:", data)
+
+      // Format the nutrition data
+      const nutrition = {
+        calories: data.calories ? data.calories.value : 0,
+        protein: data.protein ? data.protein.value : 0,
+        carbs: data.carbs ? data.carbs.value : 0,
+        fats: data.fat ? data.fat.value : 0,
+        fiber: 0, // Spoonacular doesn't provide fiber in this endpoint
+      }
+
+      setPrediction(foodTitle)
+      setNutritionValues(nutrition)
+      setAnalysisSource("text")
+
+      // Save to recent searches
+      if (!recentSearches.includes(foodTitle)) {
+        setRecentSearches((prev) => [foodTitle, ...prev].slice(0, 5))
+      }
+    } catch (error) {
+      console.error("Error searching for food nutrition:", error)
+      setError(`Failed to get nutrition info: ${error.message}`)
+
+      // Fallback to a mock response for demonstration
+      const mockNutrition = {
+        calories: 428,
+        protein: 13,
+        carbs: 65,
+        fats: 16,
+        fiber: 3,
+      }
+      setPrediction(`${foodTitle} (Estimated)`)
+      setNutritionValues(mockNutrition)
+      setAnalysisSource("text")
+    } finally {
+      setIsSearching(false)
     }
   }
 
@@ -183,6 +195,19 @@ function NutritionInfo() {
     fileInputRef.current.click()
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && foodTitle.trim()) {
+      searchFoodNutrition()
+    }
+  }
+
+  const resetAnalysis = () => {
+    setPrediction(null)
+    setNutritionValues(null)
+    setError(null)
+    setAnalysisSource(null)
+  }
+
   const nutritionFields = [
     { name: "calories", unit: "kcal" },
     { name: "protein", unit: "g" },
@@ -193,48 +218,120 @@ function NutritionInfo() {
 
   return (
     <div className="nutrition-info">
+      <button className="back-button" onClick={() => window.history.back()}>
+        Back
+      </button>
+
+      {error && (
+        <div className="error-message">
+          <p>{error}</p>
+          <p className="error-note">Using estimated values instead.</p>
+        </div>
+      )}
+
       <div className="nutrition-grid">
         <ScrollAnimation animationType="slide-in-left">
-          <div className="upload-section">
-            <div className={`upload-container ${preview ? "has-image" : ""}`} onClick={handleUploadClick}>
-              {preview ? (
-                <div className="preview-container">
-                  <img src={preview || "/placeholder.svg"} alt="Food preview" className="food-preview" />
-                  {isAnalyzing && (
-                    <div className="analyzing-overlay">
-                      <Spinner animation="border" role="status">
-                        <span className="sr-only">Analyzing...</span>
-                      </Spinner>
-                      <p>Analyzing your food...</p>
+          <div className="analysis-section">
+            <h2 className="section-title">Analyze Your Food</h2>
+
+            <div className="analysis-methods">
+              {/* Image Upload Section */}
+              <div className="analysis-method">
+                <h3 className="method-title">Upload Food Image</h3>
+                <div className={`upload-container ${preview ? "has-image" : ""}`} onClick={handleUploadClick}>
+                  {preview ? (
+                    <div className="preview-container">
+                      <img src={preview || "/placeholder.svg"} alt="Food preview" className="food-preview" />
+                      {isAnalyzing && (
+                        <div className="analyzing-overlay">
+                          <Spinner animation="border" role="status">
+                            <span className="sr-only">Analyzing...</span>
+                          </Spinner>
+                          <p>Analyzing your food...</p>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="upload-placeholder">
+                      <p>UPLOAD IMAGE</p>
+                      <div className="upload-icon">
+                        <span>⬆️</span>
+                      </div>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageChange}
+                    accept="image/*"
+                    className="file-input"
+                    hidden
+                  />
+                </div>
+                {preview && !isAnalyzing && (
+                  <button className="analyze-btn" onClick={analyzeImage} disabled={isSearching}>
+                    Analyze Image
+                  </button>
+                )}
+              </div>
+
+              {/* Text Search Section */}
+              <div className="analysis-method">
+                <h3 className="method-title">Search by Food Name</h3>
+                <div className="text-search-container">
+                  <div className="search-input-container">
+                    <input
+                      type="text"
+                      value={foodTitle}
+                      onChange={(e) => setFoodTitle(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="Enter food name (e.g., Spaghetti Aglio et Olio)"
+                      className="food-search-input"
+                    />
+                    <button
+                      className="search-btn"
+                      onClick={searchFoodNutrition}
+                      disabled={isSearching || !foodTitle.trim() || isAnalyzing}
+                    >
+                      {isSearching ? "Searching..." : "Search"}
+                    </button>
+                  </div>
+                  <p className="search-tip">
+                    Try to be specific with dish names for more accurate nutrition estimates.
+                  </p>
+                  {recentSearches.length > 0 && (
+                    <div className="recent-searches">
+                      <p className="recent-title">Recent Searches:</p>
+                      <div className="recent-tags">
+                        {recentSearches.map((search, index) => (
+                          <button
+                            key={index}
+                            className="recent-tag"
+                            onClick={() => {
+                              setFoodTitle(search)
+                              searchFoodNutrition()
+                            }}
+                          >
+                            {search}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
-              ) : (
-                <div className="upload-placeholder">
-                  <p>UPLOAD IMAGE</p>
-                  <div className="upload-icon">
-                    <span>⬆️</span>
-                  </div>
-                </div>
-              )}
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleImageChange}
-                accept="image/*"
-                className="file-input"
-                hidden
-              />
+              </div>
             </div>
-            {preview && !isAnalyzing && !prediction && (
-              <button className="analyze-btn" onClick={analyzeImage} disabled={!modelsLoaded}>
-                {modelsLoaded ? "Analyze Food" : "Loading Models..."}
-              </button>
-            )}
+
             {prediction && (
               <div className="prediction-result">
-                <h3>Detected Food:</h3>
+                <h3>Analyzed Food:</h3>
                 <p className="food-name">{prediction}</p>
+                <p className="analysis-source">
+                  {analysisSource === "image" ? "Based on image analysis" : "Based on text search"}
+                </p>
+                <button className="reset-btn" onClick={resetAnalysis}>
+                  Analyze Another Food
+                </button>
               </div>
             )}
           </div>

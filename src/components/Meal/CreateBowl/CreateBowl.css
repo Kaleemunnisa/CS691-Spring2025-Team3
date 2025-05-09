@@ -3,6 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   color: #fff;
+  position: relative;
 }
 
 .bowl-header {
@@ -243,10 +244,31 @@
   width: 90%;
   max-width: 900px;
   max-height: 90vh;
-  overflow-y: auto;
   position: relative;
   animation: modalFadeIn 0.3s forwards;
-  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a5a #1a1a2e;
+}
+
+/* Custom scrollbar styles */
+.recipe-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.recipe-modal::-webkit-scrollbar-track {
+  background: #1a1a2e;
+  border-radius: 0 12px 12px 0;
+}
+
+.recipe-modal::-webkit-scrollbar-thumb {
+  background-color: #3a3a5a;
+  border-radius: 20px;
+  border: 2px solid #1a1a2e;
+}
+
+.recipe-modal::-webkit-scrollbar-thumb:hover {
+  background-color: #4a4a6a;
 }
 
 .close-modal {
@@ -266,7 +288,7 @@
 }
 
 .recipe-detail-container {
-  padding: 20px;
+  padding: 20px 20px 40px 20px;
 }
 
 .recipe-title {
@@ -447,6 +469,7 @@
   flex-direction: column;
   gap: 10px;
   margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {
@@ -456,7 +479,8 @@
 }
 
 .view-recipe-button,
-.save-recipe-button {
+.save-recipe-button,
+.add-to-dashboard-btn {
   flex: 1;
   padding: 12px;
   border: none;
@@ -486,6 +510,15 @@
   background-color: #3a3a5a;
 }
 
+.add-to-dashboard-btn {
+  background-color: #10b981;
+  color: white;
+}
+
+.add-to-dashboard-btn:hover {
+  background-color: #059669;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -503,6 +536,59 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.back-button {
+  background-color: #2a2a4a;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #3a3a5a;
+}
+
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #10b981;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  animation: toastFadeIn 0.3s, toastFadeOut 0.3s 2.7s;
+}
+
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
   }
 }
 

@@ -1,8 +1,12 @@
 .activity-section {
-  background-color: #232342;
-  border-radius: 8px;
-  padding: 16px;
+  background-color: #1e1e2f;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  color: white;
   height: 100%;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
 }
@@ -10,29 +14,35 @@
 .time-range {
   display: flex;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .time-btn {
   background: none;
   border: none;
-  color: #ffffff;
-  padding: 4px 12px;
+  color: #a0aec0;
+  padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.time-btn:hover {
+  color: white;
 }
 
 .time-btn.active {
-  background-color: #2a2a4a;
+  background-color: #252547;
+  color: white;
 }
 
+/* Activity metrics */
 .activity-charts {
   display: flex;
   flex-direction: column;
   gap: 24px;
   flex: 1;
-  justify-content: space-between;
 }
 
 .chart-container {
@@ -51,18 +61,19 @@
 .chart-header h3 {
   font-size: 16px;
   font-weight: 500;
+  margin: 0;
 }
 
 .move {
-  color: #ff4d8f;
+  color: #ff6b8b;
 }
 
 .exercise {
-  color: #ffc107;
+  color: #ffd166;
 }
 
 .goal {
-  color: #4dd0e1;
+  color: #4ecdc4;
 }
 
 .chart-value {
@@ -70,3 +81,56 @@
   color: #8a8aaa;
 }
 
+/* Chart wrapper to ensure proper height */
+.chart-wrapper {
+  height: 60px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+/* Bar chart styling */
+.bar-chart {
+  height: 40px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.bar {
+  flex: 1;
+  background-color: #ff6b8b;
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+  transition: height 0.3s ease;
+}
+
+.bar.exercise {
+  background-color: #ffd700;
+}
+
+.bar.goal {
+  background-color: #4299e1;
+}
+
+.chart-grid {
+  position: relative;
+  height: 40px;
+}
+
+.grid-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.grid-line:nth-child(1) {
+  left: 25%;
+}
+.grid-line:nth-child(2) {
+  left: 50%;
+}
+.grid-line:nth-child(3) {
+  left: 75%;
+}

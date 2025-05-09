@@ -1,3 +1,4 @@
+/* Dashboard styles with dark theme */
 .dashboard {
   flex: 1;
   padding: 16px;
@@ -6,57 +7,266 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #1a1a2e;
+  color: #ffffff;
 }
 
 @media (min-width: 1024px) {
   .dashboard {
-    padding-left: 86px; 
-    margin-left: 0; 
+    padding-left: 86px;
+    margin-left: 0;
+  }
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.dashboard-header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Sync button container - centered below header */
+.sync-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.sync-button {
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sync-button:hover {
+  background-color: #3182ce;
+  transform: translateY(-1px);
+}
+
+.sync-button:disabled {
+  background-color: #718096;
+  cursor: not-allowed;
+}
+
+.sync-button.synced {
+  background-color: #48bb78;
+}
+
+.sync-icon {
+  margin-right: 8px;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.sync-icon.rotating {
+  animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
 .dashboard-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 16px;
+  grid-template-rows: 1.2fr 1fr;
+  gap: 8px;
   flex: 1;
-  height: calc(100% - 70px);
+  height: calc(100% - 100px);
 }
 
-.dashboard-main {
-  height: 100%;
+/* Activity section (top left) */
+.activity-section {
+  grid-column: 1;
+  grid-row: 1;
+  background-color: #252547;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+}
+
+/* Sleep section (top right) */
+.sleep-section {
+  grid-column: 2;
+  grid-row: 1;
+  background-color: #252547;
+  border-radius: 12px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
 }
 
-.dashboard-side {
+/* Heart rate section (bottom left) */
+.heart-rate-section {
+  grid-column: 1;
+  grid-row: 2;
+  background-color: #252547;
+  border-radius: 12px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  height: 100%;
 }
 
-.dashboard-bottom-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  flex: 1;
+/* Calories section (bottom right) */
+.calories-section {
+  grid-column: 2;
+  grid-row: 2;
+  background-color: #252547;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
 }
 
+/* Loading styles */
+.dashboard-container.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #1a1a2e;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sync styles */
+.sync-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 150px);
+  width: 100%;
+}
+
+.sync-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sync-card h2 {
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.sync-card p {
+  margin-bottom: 24px;
+  color: #cbd5e0;
+}
+
+.show-more-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 16px auto;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.show-more-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments */
 @media (max-width: 1024px) {
   .dashboard-content {
     grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
     height: auto;
   }
 
-  .dashboard-bottom-row {
-    grid-template-columns: 1fr;
+  .activity-section,
+  .sleep-section,
+  .heart-rate-section,
+  .calories-section {
+    grid-column: 1;
   }
 
-  .dashboard-main,
-  .dashboard-side {
-    height: auto;
+  .activity-section {
+    grid-row: 1;
+  }
+
+  .sleep-section {
+    grid-row: 2;
+  }
+
+  .heart-rate-section {
+    grid-row: 3;
+  }
+
+  .calories-section {
+    grid-row: 4;
   }
 }
 
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #252547;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a4a6a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a5a7a;
+}

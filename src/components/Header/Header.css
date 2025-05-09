@@ -2,6 +2,9 @@
   background-color: #232342;
   padding: 16px;
   border-radius: 8px;
+  width: 100%; /* Make header full width */
+  box-sizing: border-box; /* Include padding in width calculation */
+  margin-bottom: 20px; /* Add some space below the header */
 }
 
 .user-greeting {
@@ -38,4 +41,3 @@
     font-size: 16px;
   }
 }
-

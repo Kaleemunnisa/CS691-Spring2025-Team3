@@ -12,9 +12,6 @@ function Header() {
   return (
     <header className="header">
       <div className="user-greeting">
-        <div className="user-avatar">
-          <img src="/placeholder.svg" alt="User" />
-        </div>
         <h1>Hi {userData?.displayName ? userData?.displayName : 'User'}, Good Evening</h1>
       </div>
     </header>

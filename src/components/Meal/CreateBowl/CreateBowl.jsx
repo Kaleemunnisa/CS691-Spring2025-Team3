@@ -1,6 +1,8 @@
 import "./CreateBowl.css"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import ScrollAnimation from "../../ScrollAnimation/ScrollAnimation"
+import { useCalories } from "../../../context/CalorieContext"
 
 function CreateBowl() {
   const API_KEY = "08f6d92d470e4da0a6651aa95f197f60"
@@ -12,6 +14,12 @@ function CreateBowl() {
   const [selectedRecipe, setSelectedRecipe] = useState(null)
   const [recipeDetails, setRecipeDetails] = useState(null)
   const [error, setError] = useState(null)
+  const [toast, setToast] = useState(null)
+  const navigate = useNavigate()
+
+  // Create a fallback in case the context isn't available
+  const calorieContext = useCalories() || { addMeal: () => console.warn("Calorie context not available") }
+  const { addMeal } = calorieContext
 
   const handleIngredientChange = (index, value) => {
     const newIngredients = [...ingredients]
@@ -34,7 +42,6 @@ function CreateBowl() {
 
       const ingredientsParam = validIngredients.join(",")
 
-      // Make API call to Spoonacular
       const response = await fetch(
         `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${ingredientsParam}&number=6&ranking=1&ignorePantry=true`,
       )
@@ -78,7 +85,7 @@ function CreateBowl() {
 
   const handleRecipeClick = (recipe) => {
     setSelectedRecipe(recipe)
-    setRecipeDetails(null) 
+    setRecipeDetails(null)
     fetchRecipeDetails(recipe.id)
   }
 
@@ -87,8 +94,42 @@ function CreateBowl() {
     setRecipeDetails(null)
   }
 
+  const handleAddToDashboard = () => {
+    if (!recipeDetails) return
+
+    // Get calories from nutrition data
+    const calories = Math.round(recipeDetails.nutrition?.nutrients.find((n) => n.name === "Calories")?.amount || 0)
+
+    // Add meal to calorie tracker
+    addMeal({
+      id: recipeDetails.id,
+      name: recipeDetails.title,
+      calories: calories,
+      image: recipeDetails.image,
+      servings: recipeDetails.servings,
+      time: recipeDetails.readyInMinutes,
+      timestamp: new Date().toISOString(),
+    })
+
+    // Show toast notification
+    setToast(`Added ${recipeDetails.title} (${calories} calories) to dashboard`)
+
+    // Hide toast after 3 seconds
+    setTimeout(() => {
+      setToast(null)
+    }, 3000)
+  }
+
+  const goBack = () => {
+    navigate(-1)
+  }
+
   return (
     <div className="create-bowl">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
+
       <div className="bowl-header">
         <h2>Find Recipes With Your Ingredients</h2>
         <p className="bowl-description">Enter ingredients you have and we'll find recipes for you</p>
@@ -303,6 +344,9 @@ function CreateBowl() {
                           View Full Recipe
                         </button>
                         <button className="save-recipe-button">Save Recipe</button>
+                        <button className="add-to-dashboard-btn" onClick={handleAddToDashboard}>
+                          Add to Dashboard
+                        </button>
                       </div>
                     </div>
                   </ScrollAnimation>
@@ -312,6 +356,8 @@ function CreateBowl() {
           </div>
         </div>
       )}
+
+      {toast && <div className="toast-notification">{toast}</div>}
     </div>
   )
 }
